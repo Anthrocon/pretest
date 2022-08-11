@@ -1,4 +1,4 @@
-baseurl = "/"
+baseurl = "https://anthrocon.github.io/pretest/"
 languageCode = "en-us"
 theme = "hello-friend"
 paginate = 5
