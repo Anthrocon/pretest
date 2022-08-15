@@ -43,7 +43,7 @@ jobs:
         if: env.CACHE_ENABLE == 'true' && github.ref == 'refs/heads/main'
         run: |
           [[ -d ~/.cache/resources ]] \
-          || mkdir ~/.cache/resources \
+          || mkdir --parents ~/.cache/resources \
           && ln --symbolic ~/.cache/resources ./resources
 
       - name: Install Hugo CLI
