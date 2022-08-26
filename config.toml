@@ -6,10 +6,6 @@ paginate = 5
 theme = "hello-friend"
 timeZone = "America/New_York"
 
-enableGitInfo = true
-[frontmatter]
-  lastmod = [":fileModTime"]
-
 [imaging]
   hint = "picture"
   quality = 80
