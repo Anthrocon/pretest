@@ -3,6 +3,6 @@ title: "Responsive Images"
 author: "Randorn Canis"
 ---
 
-Study responsive images.
+Responsive images study.
 
-![a furry](img/furry.jpg "High Resolution Image")
+![a furry](/img/furry.jpg)
