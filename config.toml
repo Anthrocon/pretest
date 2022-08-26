@@ -8,7 +8,7 @@ timeZone = "America/New_York"
 
 enableGitInfo = true
 [frontmatter]
-  lastmod = [":git"]
+  lastmod = [":fileModTime"]
 
 [imaging]
   hint = "picture"
