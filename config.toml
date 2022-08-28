@@ -6,6 +6,10 @@ paginate = 5
 theme = "hello-friend"
 timeZone = "America/New_York"
 
+[frontmatter]
+  date = [":default", ":git"]
+  lastmod = ["lastmod", ":git", "date", "publishDate"]
+
 [imaging]
   hint = "picture"
   quality = 80
