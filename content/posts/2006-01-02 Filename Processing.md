@@ -1,5 +1,5 @@
 ---
-title: {{ replace .File.TranslationBaseName "-" " " | title }}
+title: "{{ replace .File.TranslationBaseName "-" " " | title }}"
 author: "Randorn Canis"
 ---
 
