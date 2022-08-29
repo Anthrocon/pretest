@@ -1,6 +1,5 @@
 ---
-title: "{{ replace .File.TranslationBaseName "-" " " | title }}"
-author: "Randorn Canis"
+title: "{{ replace .Name "-" " " | title }}"
 ---
 
 Study of filename processing, date and slug extraction, and default sorting.
