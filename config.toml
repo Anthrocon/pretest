@@ -8,7 +8,7 @@ timeZone = "America/New_York"
 
 [frontmatter]
   date = ["date", ":filename", "publishDate", "lastmod", ":git"]
-  lastmod = ["lastmod", ":git", "date", ":filename", "publishDate"]
+  lastmod = ["lastmod", ":git"]
   publishDate = [":default", ":filename"]
 
 [imaging]
