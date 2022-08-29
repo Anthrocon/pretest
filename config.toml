@@ -7,8 +7,9 @@ theme = "hello-friend"
 timeZone = "America/New_York"
 
 [frontmatter]
-  date = [":default", ":git"]
-  lastmod = ["lastmod", ":git", "date", "publishDate"]
+  date = ["date", ":filename", "publishDate", "lastmod", ":git"]
+  lastmod = ["lastmod", ":git", "date", ":filename", "publishDate"]
+  publishDate = [":default", ":filename"]
 
 [imaging]
   hint = "picture"
