@@ -50,15 +50,14 @@ languages:
         logoHomeLink: "/"
 
     menu:
-      - main:
-        identifier: "about"
-        name: "About"
-        url: "/about"
+      main:
+        - identifier: "about"
+          name: "About"
+          url: "/about"
 
-      - main:
-        identifier: "showcase"
-        name: "Showcase"
-        url: "/showcase"
+        - identifier: "showcase"
+          name: "Showcase"
+          url: "/showcase"
 
 params:
   contentTypeName: "posts"
