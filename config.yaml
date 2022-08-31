@@ -1,0 +1,66 @@
+baseurl: "/"
+canonifyURLs: true
+disableHugoGeneratorInject: true
+languageCode: "en-us"
+paginate: 5
+theme: "hello-friend"
+timeZone: "America/New_York"
+
+frontmatter:
+  date:
+    - "date"
+    - ":filename"
+    - "publishDate"
+    - "lastmod"
+    - ":git"
+
+  lastmod:
+    - "lastmod"
+    - ":git"
+
+  publishDate:
+    - ":default"
+    - ":filename"
+
+imaging:
+  hint: "picture"
+  quality: 80
+  resampleFilter: "Lanczos"
+
+languages:
+  en:
+    title: "Hello Friend"
+    subtitle: "A simple theme for Hugo"
+    keywords: ""
+    copyright: ""
+    menuMore: "Show more"
+    writtenBy: "Written by"
+    readMore: "Read more"
+    readOtherPosts: "Read other posts"
+    newerPosts: "Newer posts"
+    olderPosts: "Older posts"
+    minuteReadingTime: "minute read"
+    dateFormatSingle: "2006-01-02"
+    dateFormatList: "2006-01-02"
+    lastModDisplay: "Updated"
+
+    params:
+      logo:
+        logoText: "hello friend"
+        logoHomeLink: "/"
+
+    menu:
+      - main:
+        identifier: "about"
+        name: "About"
+        url: "/about"
+
+      - main:
+        identifier: "showcase"
+        name: "Showcase"
+        url: "/showcase"
+
+params:
+  contentTypeName: "posts"
+  showMenuItems: 2
+  showReadingTime: true
