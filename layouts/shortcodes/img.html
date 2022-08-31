@@ -1,0 +1,49 @@
+{{- $respSizes := slice "300" "900" "1600" -}}
+{{- $imgBase := "" -}}
+{{- $src := resources.Get (printf "%s%s" $imgBase (.Get "src")) -}}
+{{- $alt := .Get "alt" -}}
+{{- $divClass := "" -}}
+{{- $imgClass := "w-full h-auto animate-fade" -}}
+{{- $dataSzes := "(min-width: 1024px) 100vw, 50vw" -}}
+{{- $LQIP_img := $src.Resize "20x jpg" -}}
+{{- $LQIP_b64 := $LQIP_img.Content | base64Encode -}}
+{{- $CFPstyle := printf "%s%s%s" "background: url(data:image/jpeg;base64," $LQIP_b64 "); background-size: cover; background-repeat: no-repeat;" -}}
+{{- $actualImg := $src.Resize "600x jpg" -}}
+{{- $imgBd5 := md5 $src -}}
+	<style>
+		.imgB-{{ $imgBd5 }} { {{ $CFPstyle | safeCSS }} }
+	</style>
+	<div class="relative imgB-{{ $imgBd5 }} bg-center">
+	<picture>
+		<source
+			type="image/webp"
+			srcset="
+			{{- with $respSizes -}}
+				{{- range $i, $e := . -}}
+					{{- if ge $src.Width . -}}
+						{{- if $i }}, {{ end -}}{{- ($src.Resize (printf "%sx%s" . " webp") ).RelPermalink }} {{ . }}w
+					{{- end -}}
+				{{- end -}}
+			{{- end -}}"
+			sizes="{{ $dataSzes }}"
+		/>
+		<source
+			type="image/jpeg"
+			srcset="
+			{{- with $respSizes -}}
+				{{- range $i, $e := . -}}
+					{{- if ge $src.Width . -}}
+						{{- if $i }}, {{ end -}}{{- ($src.Resize (printf "%sx%s" . " jpg") ).RelPermalink }} {{ . }}w
+					{{- end -}}
+				{{- end -}}
+			{{- end -}}"\
+			sizes="{{ $dataSzes }}"
+		/>
+		<img class="{{ $imgClass }}"
+			src="{{ $actualImg.RelPermalink }}"
+			width="{{ $src.Width }}"
+			height="{{ $src.Height }}"
+			alt="{{ $alt }}"
+		/>
+	</picture>
+</div>
