@@ -1,48 +1,37 @@
-{{- $respSizes := slice "300" "900" "1600" -}}
-{{- $imgBase := "images/" -}}
-{{- $src := resources.Get (printf "%s%s" $imgBase (.Get "src")) -}}
+{{- $resWidths := slice "300" "900" "1600" -}}
+
+{{- $src := .Page.Resources.GetMatch (.Get "src") -}}
 {{- $alt := .Get "alt" -}}
-{{- $divClass := "" -}}
-{{- $imgClass := "w-full h-auto animate-fade" -}}
-{{- $dataSzes := "(min-width: 1024px) 100vw, 50vw" -}}
-{{- $LQIP_img := $src.Resize "20x jpg" -}}
-{{- $LQIP_b64 := $LQIP_img.Content | base64Encode -}}
-{{- $CFPstyle := printf "%s%s%s" "background: url(data:image/jpeg;base64," $LQIP_b64 "); background-size: cover; background-repeat: no-repeat;" -}}
-{{- $actualImg := $src.Resize "600x jpg" -}}
-{{- $imgBd5 := md5 $src -}}
-	<style>
-		.imgB-{{ $imgBd5 }} { {{ $CFPstyle | safeCSS }} }
-	</style>
-	<div class="relative imgB-{{ $imgBd5 }} bg-center">
+{{- $hint := .Get "hint" -}}
+{{- if $hint -}}{{- $hint = printf " %s" $hint -}}{{- end -}}
+{{- $filter := .Get "filter" -}}
+{{- if $filter -}}{{- $filter = printf " %s" $filter -}}{{- end -}}
+
+{{- $LqipBin := $src.Resize "16x jpg" -}}
+{{- $LqipB64 := $LqipBin.Content | base64Encode -}}
+{{- $divStyle := printf "background: url(data:image/jpeg;base64,%s); background-size: cover; background-repeat: no-repeat;" $LqipB64 -}}
+{{- $sourceSizes := "(min-width: 1024px) 100vw, 50vw" -}}
+
+{{- $fallbackBin := $src.Resize (printf "600x jpg%s" $filter) -}}
+
+<div style="{{ $divStyle | safeCSS }}">
 	<picture>
-		<source
-			type="image/webp"
-			srcset="
-			{{- with $respSizes -}}
+		<source type="image/webp" srcset="
+			{{- with $resWidths -}}
 				{{- range $i, $e := . -}}
 					{{- if ge $src.Width . -}}
-						{{- if $i }}, {{ end -}}{{- ($src.Resize (printf "%sx%s" . " webp") ).RelPermalink }} {{ . }}w
+						{{- if $i }}, {{ end -}}{{- ($src.Resize (printf "%sx webp%s%s" . $hint $filter) ).RelPermalink }} {{ . }}w
 					{{- end -}}
 				{{- end -}}
-			{{- end -}}"
-			sizes="{{ $dataSzes }}"
-		/>
-		<source
-			type="image/jpeg"
-			srcset="
-			{{- with $respSizes -}}
+			{{- end -}}" sizes="{{ $sourceSizes }}">
+		<source type="image/jpeg" srcset="
+			{{- with $resWidths -}}
 				{{- range $i, $e := . -}}
 					{{- if ge $src.Width . -}}
-						{{- if $i }}, {{ end -}}{{- ($src.Resize (printf "%sx%s" . " jpg") ).RelPermalink }} {{ . }}w
+						{{- if $i }}, {{ end -}}{{- ($src.Resize (printf "%sx jpg%s" . $filter) ).RelPermalink }} {{ . }}w
 					{{- end -}}
 				{{- end -}}
-			{{- end -}}"\
-			sizes="{{ $dataSzes }}"
-		/>
-		<img class="{{ $imgClass }}"
-			src="{{ $actualImg.RelPermalink }}"
-			width="{{ $src.Width }}"
-			alt="{{ $alt }}"
-		/>
+			{{- end -}}" sizes="{{ $sourceSizes }}">
+		<img src="{{ $fallbackBin.RelPermalink }}" alt="{{ $alt }}" width="{{ $src.Width }}" height="{{ $src.Height }}" style="height: auto;">
 	</picture>
 </div>
