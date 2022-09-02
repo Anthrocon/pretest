@@ -7,9 +7,9 @@
 {{- $filter := .Get "filter" -}}
 {{- if $filter -}}{{- $filter = printf " %s" $filter -}}{{- end -}}
 
-{{- $LqipBin := $src.Resize "8x jpg" -}}
+{{- $LqipBin := $src.Resize "24x jpg" -}}
 {{- $LqipB64 := $LqipBin.Content | base64Encode -}}
-{{- $divStyle := printf "background: url(data:image/jpeg;base64,%s); background-size: cover;" $LqipB64 -}}
+{{- $divStyle := printf "background: url(data:image/jpeg;base64,%s) cover no-repeat;" $LqipB64 -}}
 {{- $sourceSizes := "(min-width: 800px) 800px, 100vw" -}}
 
 {{- $fallbackBin := $src.Resize (printf "760x jpg%s" $filter) -}}
@@ -32,6 +32,6 @@
 					{{- end -}}
 				{{- end -}}
 			{{- end -}}" sizes="{{ $sourceSizes }}">
-		<img src="{{ $fallbackBin.RelPermalink }}" alt="{{ $alt }}" width="{{ $src.Width }}" height="{{ $src.Height }}" style="height: auto;">
+		<img class="h-auto" src="{{ $fallbackBin.RelPermalink }}" alt="{{ $alt }}" width="{{ $src.Width }}" height="{{ $src.Height }}">
 	</picture>
 </div>
