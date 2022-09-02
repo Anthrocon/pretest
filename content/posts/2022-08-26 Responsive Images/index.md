@@ -6,7 +6,7 @@ author: "Randorn Canis"
 ## Responsive Images Study
 
 Custom shortcode.
-{{< img src="furry.jpg" alt="a furry" >}}
+{{< img src="_furry.jpg" alt="a furry" >}}
 
 Markdown image.
 ![a furry](/img/furry.jpg)

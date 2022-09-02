@@ -22,6 +22,9 @@ frontmatter:
     - ":default"
     - ":filename"
 
+ignoreFiles:
+  - "(?<=\/)_[^/]*\.(jpg|jpeg|png|gif)$"
+
 imaging:
   hint: "picture"
   quality: 80
