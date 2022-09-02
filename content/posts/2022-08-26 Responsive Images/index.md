@@ -1,6 +1,9 @@
 ---
 title: "Responsive Images"
 author: "Randorn Canis"
+
+_build:
+    publishResources: false
 ---
 
 ## Responsive Images Study
