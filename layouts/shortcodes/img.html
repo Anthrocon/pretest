@@ -1,20 +1,20 @@
-{{- $resWidths := slice "300" "900" "1600" -}}
+{{- $resWidths := slice "240" "480" "720" "960" "1200" "1440" "1680" "1920" "2160" "2400" "2640" "2880" "3120" "3360" "3600" "3840" -}}
 
-{{- $src := .Page.Resources.GetMatch (.Get "src") -}}
+{{- $src := .Resources.GetMatch (.Get "src") -}}
 {{- $alt := .Get "alt" -}}
 {{- $hint := .Get "hint" -}}
 {{- if $hint -}}{{- $hint = printf " %s" $hint -}}{{- end -}}
 {{- $filter := .Get "filter" -}}
 {{- if $filter -}}{{- $filter = printf " %s" $filter -}}{{- end -}}
 
-{{- $LqipBin := $src.Resize "16x jpg" -}}
+{{- $LqipBin := $src.Resize "8x jpg" -}}
 {{- $LqipB64 := $LqipBin.Content | base64Encode -}}
-{{- $divStyle := printf "background: url(data:image/jpeg;base64,%s); background-size: cover; background-repeat: no-repeat;" $LqipB64 -}}
-{{- $sourceSizes := "(min-width: 1024px) 100vw, 50vw" -}}
+{{- $divStyle := printf "background: url(data:image/jpeg;base64,%s); background-size: cover;" $LqipB64 -}}
+{{- $sourceSizes := "(min-width: 800px) 800px, 100vw" -}}
 
-{{- $fallbackBin := $src.Resize (printf "600x jpg%s" $filter) -}}
+{{- $fallbackBin := $src.Resize (printf "760x jpg%s" $filter) -}}
 
-<div style="{{ $divStyle | safeCSS }}">
+<div class="bg-lqip" style="{{ $divStyle | safeCSS }}">
 	<picture>
 		<source type="image/webp" srcset="
 			{{- with $resWidths -}}
