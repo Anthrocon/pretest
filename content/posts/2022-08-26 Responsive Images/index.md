@@ -9,7 +9,7 @@ _build:
 ## Responsive Images Study
 
 Custom shortcode.
-{{< img src="furry.jpg" alt="a furry" >}}
+{{< img src="furry.jpg" alt="a furry" hint="photo" >}}
 
 Markdown image.
 ![a furry](/img/furry.jpg)
