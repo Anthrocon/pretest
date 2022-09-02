@@ -9,12 +9,12 @@
 
 {{- $LqipBin := $src.Resize "24x jpg" -}}
 {{- $LqipB64 := $LqipBin.Content | base64Encode -}}
-{{- $divStyle := printf "background: cover no-repeat url(data:image/jpeg;base64,%s);" $LqipB64 -}}
+{{- $divStyle := printf "background-image: url(data:image/jpeg;base64,%s);" $LqipB64 -}}
 {{- $sourceSizes := "(min-width: 800px) 800px, 100vw" -}}
 
 {{- $fallbackBin := $src.Resize (printf "760x jpg%s" $filter) -}}
 
-<div style="{{ $divStyle | safeCSS }}">
+<div class="lqip" style="{{ $divStyle | safeCSS }}">
 	<picture>
 		<source type="image/webp" srcset="
 			{{- with $resWidths -}}
