@@ -4,15 +4,13 @@
 {{- $alt := .Get "alt" -}}
 {{- $hint := .Get "hint" -}}
 {{- if $hint -}}{{- $hint = printf " %s" $hint -}}{{- end -}}
-{{- $filter := .Get "filter" -}}
-{{- if $filter -}}{{- $filter = printf " %s" $filter -}}{{- end -}}
 
 {{- $LqipBin := $src.Resize "16x jpg" -}}
 {{- $LqipB64 := $LqipBin.Content | base64Encode -}}
 {{- $divStyle := printf "background-image: url(data:image/jpeg;base64,%s);" $LqipB64 -}}
 {{- $sourceSizes := "(min-width: 800px) 800px, 100vw" -}}
 
-{{- $fallbackBin := $src.Resize (printf "760x jpg%s" $filter) -}}
+{{- $fallbackBin := $src.Resize "760x jpg" -}}
 
 <div class="lqip" style="{{ $divStyle | safeCSS }}">
 	<picture>
@@ -20,7 +18,7 @@
 			{{- with $resWidths -}}
 				{{- range $i, $e := . -}}
 					{{- if ge $src.Width . -}}
-						{{- if $i }}, {{ end -}}{{- ($src.Resize (printf "%sx webp%s%s" . $hint $filter) ).RelPermalink }} {{ . }}w
+						{{- if $i }}, {{ end -}}{{- ($src.Resize (printf "%sx webp%s" . $hint) ).RelPermalink }} {{ . }}w
 					{{- end -}}
 				{{- end -}}
 			{{- end -}}" sizes="{{ $sourceSizes }}">
@@ -28,7 +26,7 @@
 			{{- with $resWidths -}}
 				{{- range $i, $e := . -}}
 					{{- if ge $src.Width . -}}
-						{{- if $i }}, {{ end -}}{{- ($src.Resize (printf "%sx jpg%s" . $filter) ).RelPermalink }} {{ . }}w
+						{{- if $i }}, {{ end -}}{{- ($src.Resize (printf "%sx jpg" . ) ).RelPermalink }} {{ . }}w
 					{{- end -}}
 				{{- end -}}
 			{{- end -}}" sizes="{{ $sourceSizes }}">
