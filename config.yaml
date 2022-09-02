@@ -22,9 +22,6 @@ frontmatter:
     - ":default"
     - ":filename"
 
-ignoreFiles:
-  - \.(jpg|jpeg|png|gif)$
-
 imaging:
   hint: "picture"
   quality: 80
@@ -66,3 +63,6 @@ params:
   contentTypeName: "posts"
   showMenuItems: 2
   showReadingTime: true
+
+  _build:
+    publishResources: false
