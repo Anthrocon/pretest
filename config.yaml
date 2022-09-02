@@ -63,7 +63,3 @@ params:
   contentTypeName: "posts"
   showMenuItems: 2
   showReadingTime: true
-
-  cascade:
-    _build:
-      publishResources: false
