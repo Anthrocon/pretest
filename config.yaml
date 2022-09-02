@@ -64,5 +64,6 @@ params:
   showMenuItems: 2
   showReadingTime: true
 
-  _build:
-    publishResources: false
+  cascade:
+    _build:
+      publishResources: false
