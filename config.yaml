@@ -23,7 +23,7 @@ frontmatter:
     - ":filename"
 
 ignoreFiles:
-  - "(?<=\/)_[^/]*\.(jpg|jpeg|png|gif)$"
+  - \.(jpg|jpeg|png|gif)$
 
 imaging:
   hint: "picture"
