@@ -12,9 +12,8 @@
 {{- $resWidths := slice "240" "480" "720" "960" "1200" "1440" "1680" "1920" "2160" "2400" "2640" "2880" "3120" "3360" "3600" "3840" -}}
 {{- $sourceSizes := "(min-width: 800px) 800px, 100vw" -}}
 
-{{- if .Page.Resources.GetMatch (.Get "src") -}}
-	{{- $src := .Page.Resources.GetMatch (.Get "src") -}}
-{{- else -}}
+{{- $src := .Page.Resources.GetMatch (.Get "src") -}}
+{{- if not $src -}}
 	{{- $src := resources.Get (printf "images/%s" (.Get "src")) -}}
 {{- end -}}
 
@@ -51,3 +50,4 @@
 		</figcaption>
 	</figure>{{ end }}*/}}
 </div>
+{{- $src := .Page.Resources.GetMatch (.Get "src") -}}
