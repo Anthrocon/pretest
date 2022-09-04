@@ -21,8 +21,8 @@
 {{- $lqipB64 := $lqipBin.Content | base64Encode -}}
 {{- $divStyle := printf "background-image: url(data:image/jpeg;base64,%s);" $lqipB64 -}}
 
-<div class="lqip" style="{{ $divStyle | safeCSS }}">
-	{{ if or (.Get "caption") (.Get "attr") }}<figure>{{ end }}
+{{ if or (.Get "caption") (.Get "attr") }}<figure>{{ end }}
+	<div class="lqip" style="{{ $divStyle | safeCSS }}">
 		{{ with .Get "link" }}<a href="{{ . }}">{{ end }}
 			<picture>
 				<source type="image/webp" srcset="
@@ -44,9 +44,9 @@
 				<img class="h-auto" src="{{ ($src.Resize "760x jpg").RelPermalink }}" alt="{{ with .Get "alt" }}{{ . }}{{ else }}{{ .Get "caption" | markdownify | plainify }}{{ end }}" width="{{ $src.Width }}" height="{{ $src.Height }}">
 			</picture>
 		{{ if .Get "link" }}</a>{{ end }}
-		{{ if or (.Get "caption") (.Get "attr") }}<figcaption>
-			{{ .Get "caption" | markdownify }}
-			{{ with .Get "attrlink" }}<a href="{{ . }}">{{ end }}{{ .Get "attr" | markdownify }}{{ if .Get "attrlink" }}</a>{{ end }}
-		</figcaption>
-	</figure>{{ end }}
-</div>
+	</div>
+	{{ if or (.Get "caption") (.Get "attr") }}<figcaption class="center">
+		{{ .Get "caption" | markdownify }}
+		{{ with .Get "attrlink" }}<a href="{{ . }}">{{ end }}{{ .Get "attr" | markdownify }}{{ if .Get "attrlink" }}</a>{{ end }}
+	</figcaption>
+</figure>{{ end }}

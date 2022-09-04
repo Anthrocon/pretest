@@ -30,7 +30,7 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     env:
-      HUGO_VERSION: 0.101.0
+      HUGO_VERSION: 0.102.3
     steps:
       - name: Setup cache
         if: env.CACHE_ENABLE == 'true' && github.ref == 'refs/heads/main'
