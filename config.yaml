@@ -24,7 +24,7 @@ frontmatter:
 
 imaging:
   hint: "picture"
-  quality: 90
+  quality: 85
   resampleFilter: "Lanczos"
 
 languages:
