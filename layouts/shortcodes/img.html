@@ -18,12 +18,12 @@
 	{{- $src := resources.Get (printf "images/%s" (.Get "src")) -}}
 {{- end -}}
 
-{{/*{{- $lqipBin := $src.Resize "16x jpg" -}}
+{{- $lqipBin := $src.Resize "16x jpg" -}}
 {{- $lqipB64 := $lqipBin.Content | base64Encode -}}
 {{- $divStyle := printf "background-image: url(data:image/jpeg;base64,%s);" $lqipB64 -}}
 
 <div class="lqip" style="{{ $divStyle | safeCSS }}">
-	{{ if or (.Get "caption") (.Get "attr") }}<figure>{{ end }}
+{{/*	{{ if or (.Get "caption") (.Get "attr") }}<figure>{{ end }}
 		{{ with .Get "link" }}<a href="{{ . }}">{{ end }}
 			<picture>
 				<source type="image/webp" srcset="
@@ -49,5 +49,5 @@
 			{{ .Get "caption" | markdownify }}
 			{{ with .Get "attrlink" }}<a href="{{ . }}">{{ end }}{{ .Get "attr" | markdownify }}{{ if .Get "attrlink" }}</a>{{ end }}
 		</figcaption>
-	</figure>{{ end }}
-</div>*/}}
+	</figure>{{ end }}*/}}
+</div>
