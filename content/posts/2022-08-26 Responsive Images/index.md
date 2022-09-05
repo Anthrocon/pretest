@@ -9,7 +9,7 @@ _build:
 ## Responsive Images Study
 
 Custom shortcode.
-{{< img src="furry.jpg" alt="a furry" hint="picture" filter="q90" link="https://flickr.com/photos/radical/" caption="This is a furry." attr="Randorn Canis" attrlink="https://www.randorn.com/" >}}
+{{< img src="furry.jpg" alt="a furry" hint="picture" filter="q85" link="https://flickr.com/photos/radical/" caption="This is a furry." attr="Randorn Canis" attrlink="https://www.randorn.com/" >}}
 
 Markdown image.
 ![a furry](/img/furry.jpg)

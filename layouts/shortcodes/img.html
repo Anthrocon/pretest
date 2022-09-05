@@ -1,15 +1,17 @@
 {{/*
+	Hugo shortcode to generate a responsive image source set and HTML picture/figure element.
+
 	src
-		Relative file location of image in page bundle, or in assets/images/.
+		Required. File location of image relative to page bundle or assets/images/.
 
 	alt
-		Text img alt attribute.
+		Text img alt tag.
 
 	hint
 		One of drawing, icon, photo, picture, or text. Pre-defined WebP encoding parameters.
 
 	filter
-		Additional encoding parameters.
+		Additional image encoding parameters.
 
 	link
 		URL for image link.
@@ -18,14 +20,14 @@
 		Markdown text appears centered below image.
 
 	attr
-		Markdown text appears centered after image.
+		Markdown text appears centered below image after caption.
 
 	attrlink
 		URL for attr link.
 */}}
 
 {{- $resWidths := slice "240" "480" "720" "960" "1200" "1440" "1680" "1920" "2160" "2400" "2640" "2880" "3120" "3360" "3600" "3840" -}}
-{{- $sourceSizes := "(min-width: 800px) 800px, 100vw" -}}
+{{- $cssWidth := "760" -}}
 
 {{- $src := .Page.Resources.GetMatch (.Get "src") -}}
 {{- if not $src -}}
@@ -53,24 +55,34 @@
 					{{- with $resWidths -}}
 						{{- range $i, $e := . -}}
 							{{- if ge $src.Width . -}}
-								{{- if $i }}, {{ end }}{{ ($src.Resize (printf "%sx webp%s%s" . $hint $filter)).RelPermalink }} {{ . }}w
+								{{- if $i }}, {{ end -}}
+								{{- ($src.Resize (printf "%sx webp%s%s" . $hint $filter)).RelPermalink }} {{ . }}w
 							{{- end -}}
 						{{- end -}}
-					{{- end }}" sizes="{{ $sourceSizes }}">
+					{{- end }}" sizes="(min-width: {{ $cssWidth }}px) {{ $cssWidth }}px, 100vw">
 				<source type="image/jpeg" srcset="
 					{{- with $resWidths -}}
 						{{- range $i, $e := . -}}
 							{{- if ge $src.Width . -}}
-								{{- if $i }}, {{ end }}{{ ($src.Resize (printf "%sx jpg%s" . $filter)).RelPermalink }} {{ . }}w
+								{{- if $i }}, {{ end -}}
+								{{- ($src.Resize (printf "%sx jpg%s" . $filter)).RelPermalink }} {{ . }}w
 							{{- end -}}
 						{{- end -}}
-					{{- end }}" sizes="{{ $sourceSizes }}">
-				<img class="h-auto" src="{{ ($src.Resize (printf "760x jpg%s" $filter)).RelPermalink }}" alt="{{ with .Get "alt" }}{{ . }}{{ else }}{{ .Get "caption" | markdownify | plainify }}{{ end }}" width="{{ $src.Width }}" height="{{ $src.Height }}">
+					{{- end }}" sizes="(min-width: {{ $cssWidth }}px) {{ $cssWidth }}px, 100vw">
+				<img class="h-auto" src="
+					{{- ($src.Resize (printf "%sx jpg%s" $cssWidth $filter)).RelPermalink }}" alt="
+					{{- with .Get "alt" -}}
+						{{- . -}}
+					{{- else -}}
+						{{- .Get "caption" | markdownify | plainify -}}
+					{{- end }}" width="{{ $src.Width }}" height="{{ $src.Height }}">
 			</picture>
 		{{ if .Get "link" }}</a>{{ end }}
 	</div>
 	{{ if or (.Get "caption") (.Get "attr") }}<figcaption class="center">
 		{{- .Get "caption" | markdownify -}}
-		{{- if .Get "attr" }} — {{ with .Get "attrlink" }}<a href="{{ . }}">{{ end }}{{ .Get "attr" | markdownify }}{{ if .Get "attrlink" }}</a>{{ end }}{{ end -}}
+		{{- if .Get "attr" }} — {{ with .Get "attrlink" }}<a href="{{ . }}">{{ end -}}
+			{{- .Get "attr" | markdownify -}}
+		{{- if .Get "attrlink" }}</a>{{ end }}{{ end -}}
 	</figcaption>
 </figure>{{ end -}}
