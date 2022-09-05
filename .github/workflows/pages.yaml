@@ -32,33 +32,27 @@ jobs:
     env:
       HUGO_VERSION: 0.102.3
     steps:
-      - name: Link cache
-        if: env.CACHE_ENABLE == 'true' && github.ref == 'refs/heads/main'
-        run: >
-          [[ -d ~/.cache ]]
-          || mkdir ~/.cache
-
-          [[ -d ./resources ]]
-          || mkdir ./resources
-
-      - name: Setup cache
-        if: env.CACHE_ENABLE == 'true' && github.ref == 'refs/heads/main'
-        uses: actions/cache@v3
-        with:
-          path: ${{ github.workspace }}
-          key: ${{ env.HUGO_VERSION }}
-
-      - name: Install Hugo CLI
-        run: |
-          [[ -f ~/.cache/hugo.deb ]] \
-          || wget -O ~/.cache/hugo.deb https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_Linux-64bit.deb \
-          && sudo dpkg -i ~/.cache/hugo.deb
-
       - name: Checkout
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
           submodules: recursive
+
+      - name: Setup cache
+        if: env.CACHE_ENABLE == 'true' && github.ref == 'refs/heads/main'
+        uses: actions/cache@v3
+        with:
+          path: |
+            /tmp/hugo_cache
+            ./resources
+            ~/hugo.deb
+          key: ${{ env.HUGO_VERSION }}
+
+      - name: Install Hugo CLI
+        run: |
+          [[ -f ~/hugo.deb ]] \
+          || wget -O ~/hugo.deb https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_Linux-64bit.deb \
+          && sudo dpkg -i ~/hugo.deb
 
       - name: Setup Pages
         id: pages
@@ -70,7 +64,6 @@ jobs:
         run: >
           hugo
           --baseURL ${{ steps.pages.outputs.base_url }}
-          --cacheDir ~/.cache/hugo_cache/
           --enableGitInfo
           --minify
 
