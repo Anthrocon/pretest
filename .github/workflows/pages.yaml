@@ -73,11 +73,6 @@ jobs:
           --enableGitInfo
           --gc
           --minify
-          || {
-          rm -rf ~/.cache/*;
-          mkdir ~/.cache/resources;
-          exit 1;
-          }
 
       - name: Upload artifact
         if: github.ref == 'refs/heads/main'
