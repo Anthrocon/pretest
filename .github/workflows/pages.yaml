@@ -67,11 +67,11 @@ jobs:
       - name: Build site
         run: >
           hugo
-            --baseURL ${{ steps.pages.outputs.base_url }}
-            --cacheDir ~/.cache/hugo_cache/
-            --enableGitInfo
-            --gc
-            --minify
+          --baseURL ${{ steps.pages.outputs.base_url }}
+          --cacheDir ~/.cache/hugo_cache/
+          --enableGitInfo
+          --gc
+          --minify
 
       - name: Upload artifact
         if: github.ref == 'refs/heads/main'
