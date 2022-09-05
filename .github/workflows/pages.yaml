@@ -71,12 +71,7 @@ jobs:
             --cacheDir ~/.cache/hugo_cache/ \
             --enableGitInfo \
             --gc \
-            --minify \
-          || { \
-            rm -rf ~/.cache/*; \
-            mkdir ~/.cache/resources; \
-            exit 1; \
-          }
+            --minify
 
       - name: Upload artifact
         if: github.ref == 'refs/heads/main'
