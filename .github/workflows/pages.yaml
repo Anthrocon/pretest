@@ -14,15 +14,12 @@ permissions:
   id-token: write
   pages: write
 
-env:
-  CACHE_ENABLE: true
-
 defaults:
   run:
     shell: bash
 
 concurrency:
-  group: pages-${{ github.ref }}
+  group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -30,6 +27,7 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     env:
+      CACHE_ENABLE: true
       HUGO_VERSION: 0.102.3
     steps:
       - name: Checkout
@@ -43,27 +41,29 @@ jobs:
         uses: actions/cache@v3
         with:
           path: |
+            ${{ runner.temp }}/hugo.deb
             /tmp/hugo_cache
-            ~/hugo.deb
-          key: ${{ env.HUGO_VERSION }}
+            ./resources
+          key: ${{ github.workflow }}-${{ env.HUGO_VERSION }}
 
       - name: Install Hugo CLI
         run: |
-          [[ -f ~/hugo.deb ]] \
-          || wget -O ~/hugo.deb https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_Linux-64bit.deb \
-          && sudo dpkg -i ~/hugo.deb
+          [[ -f ${{ runner.temp }}/hugo.deb ]] \
+          || wget -O ${{ runner.temp }}/hugo.deb https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_Linux-64bit.deb \
+          && sudo dpkg -i ${{ runner.temp }}/hugo.deb
 
       - name: Setup Pages
         id: pages
-        uses: actions/configure-pages@v1
+        uses: actions/configure-pages@v2
         with:
           enablement: false
 
       - name: Build site
         run: >
           hugo
-          --baseURL ${{ steps.pages.outputs.base_url }}
+          --baseURL "${{ steps.pages.outputs.base_url }}/"
           --enableGitInfo
+          --gc
           --minify
 
       - name: Upload artifact
