@@ -45,7 +45,7 @@ jobs:
         if: env.CACHE_ENABLE == 'true' && github.ref == 'refs/heads/main'
         uses: actions/cache@v3
         with:
-          path: ./resources
+          path: ${{ github.workspace }}
           key: ${{ env.HUGO_VERSION }}
 
       - name: Install Hugo CLI
