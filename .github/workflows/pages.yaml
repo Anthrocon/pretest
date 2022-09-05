@@ -48,7 +48,7 @@ jobs:
           path: |
             ~/.cache
             ${{ github.workspace }}/resources
-          key: ${{ github.workflow }}-${{ env.HUGO_VERSION }}
+          key: ${{ env.HUGO_VERSION }}
 
       - name: Install Hugo CLI
         run: |
@@ -78,7 +78,6 @@ jobs:
           --minify
           || {
           rm -rf ~/.cache/*;
-          mkdir ~/.cache/resources;
           exit 1;
           }
 
