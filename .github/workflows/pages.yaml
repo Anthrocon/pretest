@@ -32,20 +32,23 @@ jobs:
     env:
       HUGO_VERSION: 0.102.3
     steps:
+      - name: Link cache
+        if: env.CACHE_ENABLE == 'true' && github.ref == 'refs/heads/main'
+        run: >
+          [[ -d ~/.cache ]]
+          || mkdir ~/.cache
+
+          [[ -d ${{ github.workspace }}/resources ]]
+          || mkdir ${{ github.workspace }}/resources
+
       - name: Setup cache
         if: env.CACHE_ENABLE == 'true' && github.ref == 'refs/heads/main'
         uses: actions/cache@v3
         with:
           path: |
             ~/.cache
-            ~/resources
+            ${{ github.workspace }}/resources
           key: ${{ github.workflow }}-${{ env.HUGO_VERSION }}
-
-      - name: Link cache
-        if: env.CACHE_ENABLE == 'true' && github.ref == 'refs/heads/main'
-        run: |
-          [[ -d ~/.cache ]] \
-          || mkdir ~/.cache \
 
       - name: Install Hugo CLI
         run: |
