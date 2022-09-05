@@ -4,7 +4,7 @@ disableHugoGeneratorInject: true
 languageCode: "en-us"
 paginate: 5
 theme: "hello-friend"
-timeout: "60s"
+timeout: "300s"
 timeZone: "America/New_York"
 
 frontmatter:
