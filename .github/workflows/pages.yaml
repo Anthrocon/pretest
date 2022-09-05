@@ -41,12 +41,6 @@ jobs:
             ~/resources
           key: ${{ github.workflow }}-${{ env.HUGO_VERSION }}
 
-      - name: Link cache
-        if: env.CACHE_ENABLE == 'true' && github.ref == 'refs/heads/main'
-        run: >
-          [[ -d ~/.cache/hugo_cache ]]
-          || mkdir ~/.cache/hugo_cache
-
       - name: Install Hugo CLI
         run: |
           [[ -f ~/.cache/hugo.deb ]] \
