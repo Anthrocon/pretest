@@ -44,7 +44,6 @@ jobs:
         with:
           path: |
             /tmp/hugo_cache
-            ./resources
             ~/hugo.deb
           key: ${{ env.HUGO_VERSION }}
 
