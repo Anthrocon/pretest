@@ -65,6 +65,12 @@ jobs:
           --enableGitInfo
           --gc
           --minify
+          || {
+          rm -f ${{ runner.temp }}/hugo.deb;
+          rm -rf /tmp/hugo_cache/*;
+          rm -rf ./resources/*;
+          exit 1;
+          }
 
       - name: Upload artifact
         if: github.ref == 'refs/heads/main'
