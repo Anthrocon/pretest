@@ -44,8 +44,8 @@ jobs:
       - name: Link cache
         if: env.CACHE_ENABLE == 'true' && github.ref == 'refs/heads/main'
         run: >
-          [[ -d ~/.cache/resources ]]
-          || mkdir ~/.cache
+          [[ -d ~/.cache/hugo_cache ]]
+          || mkdir ~/.cache/hugo_cache
 
       - name: Install Hugo CLI
         run: |
@@ -73,6 +73,11 @@ jobs:
           --enableGitInfo
           --gc
           --minify
+          || {
+          rm -rf ~/.cache/*;
+          mkdir ~/.cache/resources;
+          exit 1;
+          }
 
       - name: Upload artifact
         if: github.ref == 'refs/heads/main'
