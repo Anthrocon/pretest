@@ -44,7 +44,7 @@ jobs:
         run: |
           [[ -d ~/.cache/resources ]] \
           || mkdir --parents ~/.cache/resources \
-          && ln --symbolic ~/.cache/resources ./resources
+          && ln --symbolic ~/.cache/resources resources
 
       - name: Install Hugo CLI
         run: |
@@ -72,6 +72,11 @@ jobs:
           --enableGitInfo
           --gc
           --minify
+          || {
+          rm -rf ~/.cache/*;
+          mkdir ~/.cache/resources;
+          exit 1;
+          }
 
       - name: Upload artifact
         if: github.ref == 'refs/heads/main'
