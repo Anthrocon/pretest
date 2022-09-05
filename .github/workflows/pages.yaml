@@ -65,12 +65,12 @@ jobs:
           enablement: false
 
       - name: Build site
-        run: |
-          hugo \
-            --baseURL ${{ steps.pages.outputs.base_url }} \
-            --cacheDir ~/.cache/hugo_cache/ \
-            --enableGitInfo \
-            --gc \
+        run: >
+          hugo
+            --baseURL ${{ steps.pages.outputs.base_url }}
+            --cacheDir ~/.cache/hugo_cache/
+            --enableGitInfo
+            --gc
             --minify
 
       - name: Upload artifact
