@@ -1,0 +1,46 @@
+{{- $resWidths := slice "240" "480" "720" "960" "1200" "1440" "1680" "1920" "2160" "2400" "2640" "2880" "3120" "3360" "3600" "3840" -}}
+{{- $cssWidth := "860" -}}
+
+{{- $src := .Page.Resources.GetMatch .Params.Cover -}}
+{{- if not $src -}}
+    {{- $src = resources.Get (printf "images/%s" .Params.Cover) -}}
+{{- end -}}
+
+{{- $lqipBin := $src.Resize "16x jpg" -}}
+{{- $lqipB64 := $lqipBin.Content | base64Encode -}}
+{{- $divStyle := printf "background-image: url(data:image/jpeg;base64,%s);" $lqipB64 -}}
+
+<figure class="post-cover">
+    <div class="lqip" style="{{ $divStyle | safeCSS }}">
+        <picture>
+            <source type="image/webp" srcset="
+                {{- with $resWidths -}}
+                    {{- range $i, $e := . -}}
+                        {{- if ge $src.Width . -}}
+                            {{- if $i }}, {{ end -}}
+                            {{- ($src.Resize (printf "%sx webp" . )).RelPermalink }} {{ . }}w
+                        {{- end -}}
+                    {{- end -}}
+                {{- end }}" sizes="(min-width: {{ $cssWidth }}px) {{ $cssWidth }}px, 100vw">
+            <source type="image/jpeg" srcset="
+                {{- with $resWidths -}}
+                    {{- range $i, $e := . -}}
+                        {{- if ge $src.Width . -}}
+                            {{- if $i }}, {{ end -}}
+                            {{- ($src.Resize (printf "%sx jpg" . )).RelPermalink }} {{ . }}w
+                        {{- end -}}
+                    {{- end -}}
+                {{- end }}" sizes="(min-width: {{ $cssWidth }}px) {{ $cssWidth }}px, 100vw">
+            <img class="h-auto" src="
+                {{- ($src.Resize (printf "%sx jpg" $cssWidth)).RelPermalink }}" alt="
+                {{- if .Params.CoverAlt -}}
+                    {{- .Params.CoverAlt -}}
+                {{- else if .Params.CoverCaption -}}
+                    {{- .Params.CoverCaption | markdownify | plainify -}}
+                {{- else -}}
+                    {{- .Title -}}
+                {{- end }}" width="{{ $src.Width }}" height="{{ $src.Height }}">
+        </picture>
+    </div>
+    {{ with .Params.CoverCaption }}<figcaption class="center">{{ . | markdownify }}</figcaption>{{ end }}
+</figure>
